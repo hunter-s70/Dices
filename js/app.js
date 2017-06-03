@@ -28,3 +28,14 @@ Dice.roll_btn.addEventListener('click', function() {
     Dice.action_input.value = Dice.default.action[actionNum];
 });
 
+
+Dice.deleteField = function() { this.remove() };
+
+
+Dice.add_field_btn.addEventListener('click', function() {
+    var fieldBlock = document.querySelector('.b-field').cloneNode(true),
+        formLayout = document.querySelector('.l-fields');
+
+    fieldBlock.addEventListener('click', Dice.deleteField);
+    formLayout.appendChild(fieldBlock);
+});
