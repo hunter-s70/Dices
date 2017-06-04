@@ -23,11 +23,6 @@ Dice.randomNum = function(min, max) {
 };
 
 
-Dice.deleteField = function() {
-    this.parentNode.remove()
-};
-
-
 Dice.roll = function() {
     var placeNum = Dice.randomNum(0, Dice.default.place.length-1),
         actionNum = Dice.randomNum(0, Dice.default.action.length-1);
@@ -37,12 +32,23 @@ Dice.roll = function() {
 };
 
 
+Dice.deleteField = function() {
+    this.parentNode.remove()
+};
+
+
 Dice.addField = function() {
     var fieldBlock = document.querySelector('.b-field').cloneNode(true),
         formLayout = document.querySelector('.l-fields');
 
     formLayout.appendChild(fieldBlock);
-    Dice.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
+
+    Dice.initListeners();
+};
+
+
+Dice.addEditable = function() {
+
 };
 
 
@@ -52,6 +58,16 @@ Dice.addListeners = function(elements, callback) {
     }
 };
 
+
+Dice.initListeners = function() {
+    console.log('init');
+    Dice.addListeners(document.querySelectorAll('.j-edit-field'), Dice.addEditable);
+    Dice.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
+};
+
+
 Dice.addListeners(Dice.roll_btn, Dice.roll);
 
 Dice.addListeners(Dice.add_field_btn, Dice.addField);
+
+Dice.initListeners();
