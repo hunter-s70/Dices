@@ -9,8 +9,8 @@ Dice.place_input = document.querySelector('.j-place');
 Dice.action_input = document.querySelector('.j-action');
 
 Dice.data = {
-    place : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
-    action: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
+    in_1 : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
+    in_2: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
 };
 
 
@@ -33,11 +33,11 @@ Dice.count = (() => {
 
 // set random values in input
 Dice.roll = () => {
-    let placeNum = Dice.randomNum(0, Dice.data.place.length-1),
-        actionNum = Dice.randomNum(0, Dice.data.action.length-1);
+    let placeNum = Dice.randomNum(0, Dice.data.in_1.length-1),
+        actionNum = Dice.randomNum(0, Dice.data.in_2.length-1);
 
-    Dice.place_input.value = Dice.data.place[placeNum];
-    Dice.action_input.value = Dice.data.action[actionNum];
+    Dice.place_input.value = Dice.data.in_1[placeNum];
+    Dice.action_input.value = Dice.data.in_2[actionNum];
 };
 
 
@@ -77,7 +77,7 @@ Dice.deleteField = function() {
 
 // add editable tools to input in list
 Dice.addEditable = function() {
-    var editableClassName = 'b-field__edit',
+    let editableClassName = 'b-field__edit',
         editable = document.getElementsByClassName(editableClassName);
 
     if (!editable.length) {
@@ -99,11 +99,15 @@ Dice.addEditable = function() {
 
 Dice.addRollItem = function() {
     let parentElement = this.parentNode,
-        additionValue = parentElement.querySelector('.b-field__edit-input').value;
-    console.log(additionValue.length);
+        additionValue = parentElement.querySelector('.b-field__edit-input').value,
+        fieldId = this.parentNode.parentNode.id;
+
+    if (!Dice.data[fieldId]) Dice.data[fieldId] = [];
 
     if (additionValue.length) {
         let div = document.createElement('div');
+
+        Dice.data[fieldId].push(additionValue);
 
         div.className = 'b-field__edit-preview';
         div.innerHTML =
@@ -116,8 +120,8 @@ Dice.addRollItem = function() {
 
 
 // close editable tools
-Dice.closeEditable = () => {
-    console.log('close');
+Dice.closeEditable = function() {
+    this.parentNode.remove();
 };
 
 
