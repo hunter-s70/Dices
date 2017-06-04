@@ -78,7 +78,8 @@ Dice.deleteField = function() {
 // add editable tools to input in list
 Dice.addEditable = function() {
     let editableClassName = 'b-field__edit',
-        editable = document.getElementsByClassName(editableClassName);
+        editable = document.getElementsByClassName(editableClassName),
+        fieldId = this.parentNode.id;
 
     if (!editable.length) {
         let div = document.createElement('div');
@@ -91,12 +92,33 @@ Dice.addEditable = function() {
 
         this.parentNode.appendChild(div);
 
+        // like repeat item in items
+        Dice.renderItemsList(this.parentNode.querySelector('.' + editableClassName), fieldId);
+
         // initiate listeners to new editable field
         Dice.initListeners();
     }
 };
 
 
+// add items in DOM
+Dice.renderItemsList = (fieldEditWrap, fieldId) => {
+    if (Dice.data[fieldId]) {
+        Dice.data[fieldId].forEach(function(item) {
+            let div = document.createElement('div');
+
+            div.className = 'b-field__edit-preview';
+            div.innerHTML =
+                '<span class="b-field__edit-item">'+ item +'</span>' +
+                '<button type="button" class="j-del-item">Del item</button>';
+
+            fieldEditWrap.appendChild(div);
+        });
+    }
+};
+
+
+// funciton, wich add items in Dice.data
 Dice.addRollItem = function() {
     let parentElement = this.parentNode,
         additionValue = parentElement.querySelector('.b-field__edit-input').value,
@@ -105,16 +127,10 @@ Dice.addRollItem = function() {
     if (!Dice.data[fieldId]) Dice.data[fieldId] = [];
 
     if (additionValue.length) {
-        let div = document.createElement('div');
-
         Dice.data[fieldId].push(additionValue);
 
-        div.className = 'b-field__edit-preview';
-        div.innerHTML =
-            '<span class="b-field__edit-item">'+ additionValue +'</span>' +
-            '<button type="button" class="j-del-item">Del item</button>';
-
-        this.parentNode.appendChild(div);
+        // add items into view from Dice.data
+        Dice.renderItemsList(this.parentNode, fieldId);
     }
 };
 
