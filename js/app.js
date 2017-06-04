@@ -17,7 +17,7 @@ Dice.default = {
 
 
 // generate random numbers
-Dice.randomNum = function(min, max) {
+Dice.randomNum = (min, max) => {
     var rand = min - 0.5 + Math.random() * (max - min + 1);
     rand = Math.round(rand);
     return rand;
@@ -25,7 +25,7 @@ Dice.randomNum = function(min, max) {
 
 
 // set random values in input
-Dice.roll = function() {
+Dice.roll = () => {
     var placeNum = Dice.randomNum(0, Dice.default.place.length-1),
         actionNum = Dice.randomNum(0, Dice.default.action.length-1);
 
@@ -41,7 +41,7 @@ Dice.deleteField = function() {
 
 
 // add new input field to list
-Dice.addField = function() {
+Dice.addField = () => {
     var fieldBlock = document.querySelector('.b-field').cloneNode(true),
         formLayout = document.querySelector('.l-fields');
 
@@ -54,20 +54,33 @@ Dice.addField = function() {
 
 // add editable tools to input in list
 Dice.addEditable = function() {
+    var editableClassName = 'b-field__edit',
+        editable = document.getElementsByClassName(editableClassName);
 
+    if (!editable.length) {
+        let div = document.createElement('div');
+
+        div.className = editableClassName;
+        div.innerHTML =
+            '<input type="text">' +
+            '<button type="button" class="j-add-item">Add item</button>' +
+            '<button type="button" class="j-close-edit">Close</button>';
+
+        this.parentNode.appendChild(div);
+    }
 };
 
 
 // factory add listeners to selectors list
-Dice.addListeners = function(elements, callback) {
-    for (var i = 0; i < elements.length; i++) {
+Dice.addListeners = (elements, callback) => {
+    for (let i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', callback);
     }
 };
 
 
 // initiate listeners
-Dice.initListeners = function() {
+Dice.initListeners = () => {
     console.log('init');
     Dice.addListeners(document.querySelectorAll('.j-edit-field'), Dice.addEditable);
     Dice.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
