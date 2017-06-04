@@ -6,7 +6,6 @@ Dice.field_block = document.querySelectorAll('.j-field');
 
 Dice.roll_btn = document.querySelectorAll('.j-roll');
 Dice.add_field_btn = document.querySelectorAll('.j-add-field');
-Dice.del_field_btn = document.querySelector('.j-del-field');
 
 Dice.place_input = document.querySelector('.j-place');
 Dice.action_input = document.querySelector('.j-action');
@@ -24,7 +23,9 @@ Dice.randomNum = function(min, max) {
 };
 
 
-Dice.deleteField = function() { this.remove() };
+Dice.deleteField = function() {
+    this.parentNode.remove()
+};
 
 
 Dice.roll = function() {
@@ -40,8 +41,8 @@ Dice.addField = function() {
     var fieldBlock = document.querySelector('.b-field').cloneNode(true),
         formLayout = document.querySelector('.l-fields');
 
-    fieldBlock.addEventListener('click', Dice.deleteField);
     formLayout.appendChild(fieldBlock);
+    Dice.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
 };
 
 
@@ -54,5 +55,3 @@ Dice.addListeners = function(elements, callback) {
 Dice.addListeners(Dice.roll_btn, Dice.roll);
 
 Dice.addListeners(Dice.add_field_btn, Dice.addField);
-
-Dice.addListeners(Dice.field_block, Dice.deleteField);
