@@ -16,6 +16,7 @@ Dice.default = {
 };
 
 
+// generate random numbers
 Dice.randomNum = function(min, max) {
     var rand = min - 0.5 + Math.random() * (max - min + 1);
     rand = Math.round(rand);
@@ -23,6 +24,7 @@ Dice.randomNum = function(min, max) {
 };
 
 
+// set random values in input
 Dice.roll = function() {
     var placeNum = Dice.randomNum(0, Dice.default.place.length-1),
         actionNum = Dice.randomNum(0, Dice.default.action.length-1);
@@ -32,26 +34,31 @@ Dice.roll = function() {
 };
 
 
+// delete input from input list
 Dice.deleteField = function() {
     this.parentNode.remove()
 };
 
 
+// add new input field to list
 Dice.addField = function() {
     var fieldBlock = document.querySelector('.b-field').cloneNode(true),
         formLayout = document.querySelector('.l-fields');
 
     formLayout.appendChild(fieldBlock);
 
+    // initiate listeners to new input fields
     Dice.initListeners();
 };
 
 
+// add editable tools to input in list
 Dice.addEditable = function() {
 
 };
 
 
+// factory add listeners to selectors list
 Dice.addListeners = function(elements, callback) {
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', callback);
@@ -59,6 +66,7 @@ Dice.addListeners = function(elements, callback) {
 };
 
 
+// initiate listeners
 Dice.initListeners = function() {
     console.log('init');
     Dice.addListeners(document.querySelectorAll('.j-edit-field'), Dice.addEditable);
