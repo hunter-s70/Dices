@@ -1,12 +1,16 @@
 'use strict';
 
-var Dice = {};
+const Dice = {};    
 
 Dice.roll_btn = document.querySelectorAll('.j-roll');
 Dice.add_field_btn = document.querySelectorAll('.j-add-field');
 
 Dice.place_input = document.querySelector('.j-place');
 Dice.action_input = document.querySelector('.j-action');
+
+// Dice.editItemInput = '<input type="text" class="b-field__edit-input">';
+// Dice.editItemInput += '<button type="button" class="j-add-item">Add item</button>';
+// Dice.editItemInput += '<button type="button" class="j-close-edit">Close</button>';
 
 Dice.data = {
     in_1 : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
@@ -79,7 +83,7 @@ Dice.deleteField = function() {
 Dice.addEditable = function() {
     let editableClassName = 'b-field__edit',
         editable = document.getElementsByClassName(editableClassName),
-        fieldId = this.parentNode.id;
+        fieldName = this.parentNode.id;
 
     if (!editable.length) {
         let div = document.createElement('div');
@@ -93,7 +97,7 @@ Dice.addEditable = function() {
         this.parentNode.appendChild(div);
 
         // like repeat item in items
-        Dice.renderItemsList(this.parentNode.querySelector('.' + editableClassName), fieldId);
+        Dice.renderItemsList(this.parentNode.querySelector('.' + editableClassName), fieldName);
 
         // initiate listeners to new editable field
         Dice.initListeners();
@@ -102,17 +106,28 @@ Dice.addEditable = function() {
 
 
 // add items in DOM
-Dice.renderItemsList = (fieldEditWrap, fieldId) => {
-    if (Dice.data[fieldId]) {
-        Dice.data[fieldId].forEach(function(item) {
-            let div = document.createElement('div');
+Dice.renderItemsList = (fieldEditWrap, fieldName) => {
+    let layout = fieldEditWrap.querySelector('.l-field__edit-preview-wrap'),
+        itemLayout = document.createElement('div');
+
+    if (layout) {
+        layout.remove();
+    }
+
+    itemLayout.className = 'l-field__edit-preview-wrap';
+    fieldEditWrap.appendChild(itemLayout);
+
+    if (Dice.data[fieldName]) {
+        Dice.data[fieldName].forEach(function(item) {
+            let div = document.createElement('div'),
+                layout = fieldEditWrap.querySelector('.l-field__edit-preview-wrap');
 
             div.className = 'b-field__edit-preview';
             div.innerHTML =
                 '<span class="b-field__edit-item">'+ item +'</span>' +
                 '<button type="button" class="j-del-item">Del item</button>';
 
-            fieldEditWrap.appendChild(div);
+            layout.appendChild(div);
         });
     }
 };
@@ -122,15 +137,15 @@ Dice.renderItemsList = (fieldEditWrap, fieldId) => {
 Dice.addRollItem = function() {
     let parentElement = this.parentNode,
         additionValue = parentElement.querySelector('.b-field__edit-input').value,
-        fieldId = this.parentNode.parentNode.id;
+        fieldName = this.parentNode.parentNode.id;
 
-    if (!Dice.data[fieldId]) Dice.data[fieldId] = [];
+    if (!Dice.data[fieldName]) Dice.data[fieldName] = [];
 
     if (additionValue.length) {
-        Dice.data[fieldId].push(additionValue);
+        Dice.data[fieldName].push(additionValue);
 
         // add items into view from Dice.data
-        Dice.renderItemsList(this.parentNode, fieldId);
+        Dice.renderItemsList(this.parentNode, fieldName);
     }
 };
 
@@ -146,26 +161,18 @@ Dice.closeEditable = function() {
  */
 
 
-// factory add listeners to selectors list
-Dice.addListeners = (elements, callback) => {
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', callback);
-    }
-};
-
-
 // initiate listeners
 Dice.initListeners = () => {
     console.log('init');
-    Dice.addListeners(document.querySelectorAll('.j-edit-field'), Dice.addEditable);
-    Dice.addListeners(document.querySelectorAll('.j-add-item'), Dice.addRollItem);
-    Dice.addListeners(document.querySelectorAll('.j-close-edit'), Dice.closeEditable);
-    Dice.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
+    $$.addListeners(document.querySelectorAll('.j-edit-field'), Dice.addEditable);
+    $$.addListeners(document.querySelectorAll('.j-add-item'), Dice.addRollItem);
+    $$.addListeners(document.querySelectorAll('.j-close-edit'), Dice.closeEditable);
+    $$.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
 };
 
 
-Dice.addListeners(Dice.roll_btn, Dice.roll);
+$$.addListeners(Dice.roll_btn, Dice.roll);
 
-Dice.addListeners(Dice.add_field_btn, Dice.addField);
+$$.addListeners(Dice.add_field_btn, Dice.addField);
 
 Dice.initListeners();
