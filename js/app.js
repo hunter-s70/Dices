@@ -81,9 +81,10 @@ Dice.deleteField = function() {
 
 // add editable tools to input in list
 Dice.addEditable = function() {
-    let editableClassName = 'b-field__edit',
+    let parentElement = this.parentNode,
+        editableClassName = 'b-field__edit',
         editable = document.getElementsByClassName(editableClassName),
-        fieldName = this.parentNode.id;
+        fieldName = parentElement.id;
 
     if (!editable.length) {
         let div = document.createElement('div');
@@ -94,10 +95,10 @@ Dice.addEditable = function() {
             '<button type="button" class="j-add-item">Add item</button>' +
             '<button type="button" class="j-close-edit">Close</button>';
 
-        this.parentNode.appendChild(div);
+        parentElement.appendChild(div);
 
         // like repeat item in items
-        Dice.renderItemsList(this.parentNode.querySelector('.' + editableClassName), fieldName);
+        Dice.renderItemsList(parentElement.querySelector('.' + editableClassName), fieldName);
 
         // initiate listeners to new editable field
         Dice.initListeners();
