@@ -137,7 +137,7 @@ Dice.renderItemsList = (fieldEditWrap, fieldName) => {
 Dice.addRollItem = function() {
     let parentElement = this.parentNode,
         additionValue = parentElement.querySelector('.b-field__edit-input').value,
-        fieldName = this.parentNode.parentNode.id;
+        fieldName = parentElement.parentNode.id;
 
     if (!Dice.data[fieldName]) Dice.data[fieldName] = [];
 
@@ -145,7 +145,10 @@ Dice.addRollItem = function() {
         Dice.data[fieldName].push(additionValue);
 
         // add items into view from Dice.data
-        Dice.renderItemsList(this.parentNode, fieldName);
+        Dice.renderItemsList(parentElement, fieldName);
+
+        // initiate listeners to new editable field
+        Dice.initListeners();
     }
 };
 
@@ -153,6 +156,25 @@ Dice.addRollItem = function() {
 // close editable tools
 Dice.closeEditable = function() {
     this.parentNode.remove();
+};
+
+
+// remove roll item
+Dice.deleteItem = function() {
+    let parentElement = this.parentNode,
+        itemValue = parentElement.querySelector('.b-field__edit-item').textContent,
+        fieldName = parentElement.parentNode.parentNode.parentNode.id,
+        itemIndex = Dice.data[fieldName].indexOf(itemValue);
+
+    if (itemIndex > -1) {
+        Dice.data[fieldName].splice(itemIndex, 1);
+    }
+
+    // add items into view from Dice.data
+    Dice.renderItemsList(parentElement.parentNode.parentNode, fieldName);
+
+    // initiate listeners to new editable field
+    Dice.initListeners();
 };
 
 
@@ -168,6 +190,7 @@ Dice.initListeners = () => {
     $$.addListeners(document.querySelectorAll('.j-add-item'), Dice.addRollItem);
     $$.addListeners(document.querySelectorAll('.j-close-edit'), Dice.closeEditable);
     $$.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
+    $$.addListeners(document.querySelectorAll('.j-del-item'), Dice.deleteItem);
 };
 
 
