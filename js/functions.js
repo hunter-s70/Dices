@@ -10,6 +10,17 @@ $$.addListeners = (elements, callback) => {
     }
 };
 
+
+// generate random numbers
+$$.randomNum = (min, max) => {
+    let rand;
+
+    rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+};
+
+
 $$.appendEl = (elCreate = 'div', elParent, elClass = '', elContent = '') => {
     if (!elParent) return false;
 
@@ -20,6 +31,7 @@ $$.appendEl = (elCreate = 'div', elParent, elClass = '', elContent = '') => {
 
     elParent.appendChild(element);
 };
+
 
 $$.delEl = (element) => {
     element.remove();

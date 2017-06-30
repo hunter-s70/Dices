@@ -5,9 +5,6 @@ const Dice = {};
 Dice.roll_btn = document.querySelectorAll('.j-roll');
 Dice.add_field_btn = document.querySelectorAll('.j-add-field');
 
-Dice.place_input = document.querySelector('.j-place');
-Dice.action_input = document.querySelector('.j-action');
-
 // Dice.editItemInput = '<input type="text" class="b-field__edit-input">';
 // Dice.editItemInput += '<button type="button" class="j-add-item">Add item</button>';
 // Dice.editItemInput += '<button type="button" class="j-close-edit">Close</button>';
@@ -15,14 +12,6 @@ Dice.action_input = document.querySelector('.j-action');
 Dice.data = {
     in_1 : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
     in_2: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
-};
-
-
-// generate random numbers
-Dice.randomNum = (min, max) => {
-    var rand = min - 0.5 + Math.random() * (max - min + 1);
-    rand = Math.round(rand);
-    return rand;
 };
 
 
@@ -37,11 +26,14 @@ Dice.count = (() => {
 
 // set random values in input
 Dice.roll = () => {
-    let placeNum = Dice.randomNum(0, Dice.data.in_1.length-1),
-        actionNum = Dice.randomNum(0, Dice.data.in_2.length-1);
+    let randomNum,
+        roll_input;
 
-    Dice.place_input.value = Dice.data.in_1[placeNum];
-    Dice.action_input.value = Dice.data.in_2[actionNum];
+    for (let key in Dice.data) {
+        roll_input = document.getElementById(key).querySelector('.j-roll-input');
+        randomNum = $$.randomNum(0, Dice.data[key].length-1);
+        roll_input.value = Dice.data[key][randomNum];
+    }
 };
 
 
