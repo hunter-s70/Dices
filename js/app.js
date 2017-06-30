@@ -57,7 +57,7 @@ Dice.addField = () => {
 
 // delete input from input list
 Dice.deleteField = function() {
-    this.parentNode.remove()
+    $$.delEl(this.parentNode);
 };
 
 
@@ -148,7 +148,7 @@ Dice.addRollItem = function() {
 
 // close editable tools
 Dice.closeEditable = function() {
-    this.parentNode.remove();
+    $$.delEl(this.parentNode);
 };
 
 
