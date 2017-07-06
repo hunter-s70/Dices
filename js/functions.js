@@ -21,16 +21,29 @@ $$.randomNum = (min, max) => {
 };
 
 
-$$.appendEl = (elCreate = 'div', elParent, elClass = '', elId = '', elContent = '') => {
-    if (!elParent) return false;
+$$.appendEl = (args) => {
+    console.log(args);
+    if (!args) return false;
 
-    let element = document.createElement(elCreate);
+    let element = document.createElement(args.elCreate);
 
-    element.id = elId;
-    element.className = elClass;
-    element.innerHTML = elContent;
+    for (let key in args) {
 
-    elParent.appendChild(element);
+        if (key === 'elId') {
+            element.id = args.elId;
+        }
+
+        if (key === 'elClass') {
+            element.className = args.elClass;
+        }
+
+        if (key === 'elContent') {
+            element.innerHTML = args.elContent;
+        }
+
+    }
+
+    args.elParent.appendChild(element);
 };
 
 

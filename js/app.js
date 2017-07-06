@@ -1,16 +1,17 @@
 'use strict';
 
-const Dice = {};    
+const Dice = {};
 
 Dice.roll_btn = document.querySelectorAll('.j-roll');
 Dice.add_field_btn = document.querySelectorAll('.j-add-field');
 
-// Dice.editItemInput = '<input type="text" class="b-field__edit-input">';
-// Dice.editItemInput += '<button type="button" class="j-add-item">Add item</button>';
-// Dice.editItemInput += '<button type="button" class="j-close-edit">Close</button>';
+Dice.editItemInputClass = 'b-field__edit';
+Dice.editItemInput  = '<input type="text" class="b-field__edit-input">';
+Dice.editItemInput += '<button type="button" class="j-add-item">Add item</button>';
+Dice.editItemInput += '<button type="button" class="j-close-edit">Close</button>';
 
 Dice.fieldInputClass = 'b-field j-field';
-Dice.fieldInput = '<input type="text" class="j-roll-input">';
+Dice.fieldInput  = '<input type="text" class="j-roll-input">';
 Dice.fieldInput += '<button type="button" class="j-del-field">Del field</button>';
 Dice.fieldInput += '<button type="button" class="j-edit-field">Edit field</button>';
 
@@ -50,9 +51,15 @@ Dice.roll = () => {
 // add new input field to list
 Dice.addField = () => {
     let formLayout = document.querySelector('.l-fields'),
-        fieldID = 'in_' + Dice.count();
+        fieldInputID = 'in_' + Dice.count();
 
-    $$.appendEl('div', formLayout, Dice.fieldInputClass, fieldID, Dice.fieldInput);
+    $$.appendEl({
+        elCreate: 'div',
+        elParent: formLayout,
+        elClass: Dice.fieldInputClass,
+        elId: fieldInputID,
+        elContent: Dice.fieldInput
+    });
 
     // initiate listeners to new input fields
     Dice.initListeners();
