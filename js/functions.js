@@ -21,11 +21,12 @@ $$.randomNum = (min, max) => {
 };
 
 
-$$.appendEl = (elCreate = 'div', elParent, elClass = '', elContent = '') => {
+$$.appendEl = (elCreate = 'div', elParent, elClass = '', elId = '', elContent = '') => {
     if (!elParent) return false;
 
     let element = document.createElement(elCreate);
 
+    element.id = elId;
     element.className = elClass;
     element.innerHTML = elContent;
 

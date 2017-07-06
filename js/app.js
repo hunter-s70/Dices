@@ -9,6 +9,11 @@ Dice.add_field_btn = document.querySelectorAll('.j-add-field');
 // Dice.editItemInput += '<button type="button" class="j-add-item">Add item</button>';
 // Dice.editItemInput += '<button type="button" class="j-close-edit">Close</button>';
 
+Dice.fieldInputClass = 'b-field j-field';
+Dice.fieldInput = '<input type="text" class="j-roll-input">';
+Dice.fieldInput += '<button type="button" class="j-del-field">Del field</button>';
+Dice.fieldInput += '<button type="button" class="j-edit-field">Edit field</button>';
+
 Dice.data = {
     in_1 : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
     in_2: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
@@ -44,11 +49,10 @@ Dice.roll = () => {
 
 // add new input field to list
 Dice.addField = () => {
-    let fieldBlock = document.querySelector('.b-field').cloneNode(true),
-        formLayout = document.querySelector('.l-fields');
+    let formLayout = document.querySelector('.l-fields'),
+        fieldID = 'in_' + Dice.count();
 
-    fieldBlock.id = 'in_' + Dice.count();
-    formLayout.appendChild(fieldBlock);
+    $$.appendEl('div', formLayout, Dice.fieldInputClass, fieldID, Dice.fieldInput);
 
     // initiate listeners to new input fields
     Dice.initListeners();
