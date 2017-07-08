@@ -14,15 +14,15 @@ const Dice = {};
 
 Dice.roll_btn = document.querySelectorAll('.j-roll');
 Dice.add_field_btn = document.querySelectorAll('.j-add-field');
-Dice.uniquePrefixID = 'in_';
+Dice.prefixID = 'in_';
 Dice.startIndex = 1;
 
 Dice.data = {
-    [Dice.uniquePrefixID + Dice.startIndex]    : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
-    [Dice.uniquePrefixID + Dice.startIndex + 1]: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
+    [Dice.prefixID + Dice.startIndex]      : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
+    [Dice.prefixID + (Dice.startIndex + 1)]: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
 };
 
-
+console.log(Dice.data);
 // id unique number use in Dice.addField()
 Dice.count = (() => {
     let index = Dice.startIndex;
@@ -53,7 +53,7 @@ Dice.roll = () => {
 // add new input field to list
 Dice.addField = () => {
     let formLayout = document.querySelector('.l-fields'),
-        fieldID = Dice.uniquePrefixID + Dice.count(),
+        fieldID = Dice.prefixID + Dice.count(),
         fieldClass = 'b-field j-field',
         fieldContent;
 
