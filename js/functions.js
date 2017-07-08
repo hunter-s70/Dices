@@ -22,12 +22,13 @@ $$.randomNum = (min, max) => {
 
 
 $$.appendEl = (args) => {
-    console.log(args);
     if (!args) return false;
 
     let element = document.createElement(args.elCreate);
 
     for (let key in args) {
+
+        if (!args.hasOwnProperty(key)) continue;
 
         if (key === 'elId') {
             element.id = args.elId;

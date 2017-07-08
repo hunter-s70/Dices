@@ -4,26 +4,17 @@ const Dice = {};
 
 Dice.roll_btn = document.querySelectorAll('.j-roll');
 Dice.add_field_btn = document.querySelectorAll('.j-add-field');
-
-Dice.editItemInputClass = 'b-field__edit';
-Dice.editItemInput  = '<input type="text" class="b-field__edit-input">';
-Dice.editItemInput += '<button type="button" class="j-add-item">Add item</button>';
-Dice.editItemInput += '<button type="button" class="j-close-edit">Close</button>';
-
-Dice.fieldInputClass = 'b-field j-field';
-Dice.fieldInput  = '<input type="text" class="j-roll-input">';
-Dice.fieldInput += '<button type="button" class="j-del-field">Del field</button>';
-Dice.fieldInput += '<button type="button" class="j-edit-field">Edit field</button>';
+Dice.uniquePrefixID = 'in_';
 
 Dice.data = {
-    in_1 : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
-    in_2: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
+    [Dice.uniquePrefixID + 1]: ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
+    [Dice.uniquePrefixID + 2]: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
 };
 
 
 // id unique number use in Dice.addField()
 Dice.count = (() => {
-    let index = 3;
+    let index = 1;
     return function() {
         return index++;
     }
@@ -51,14 +42,20 @@ Dice.roll = () => {
 // add new input field to list
 Dice.addField = () => {
     let formLayout = document.querySelector('.l-fields'),
-        fieldInputID = 'in_' + Dice.count();
+        fieldInputID = Dice.uniquePrefixID + Dice.count(),
+        fieldInputClass = 'b-field j-field',
+        fieldInput;
+
+    fieldInput  = '<input type="text" class="j-roll-input">';
+    fieldInput += '<button type="button" class="j-del-field">Del field</button>';
+    fieldInput += '<button type="button" class="j-edit-field">Edit field</button>';
 
     $$.appendEl({
         elCreate: 'div',
         elParent: formLayout,
-        elClass: Dice.fieldInputClass,
+        elClass: fieldInputClass,
         elId: fieldInputID,
-        elContent: Dice.fieldInput
+        elContent: fieldInput
     });
 
     // initiate listeners to new input fields
@@ -87,18 +84,21 @@ Dice.addEditable = function() {
     let parentElement = this.parentNode,
         editableClassName = 'b-field__edit',
         editable = document.getElementsByClassName(editableClassName),
-        fieldName = parentElement.id;
+        fieldName = parentElement.id,
+        editItemInput;
+
+    editItemInput  = '<input type="text" class="b-field__edit-input">';
+    editItemInput += '<button type="button" class="j-add-item">Add item</button>';
+    editItemInput += '<button type="button" class="j-close-edit">Close</button>';
 
     if (!editable.length) {
-        let div = document.createElement('div');
 
-        div.className = editableClassName;
-        div.innerHTML =
-            '<input type="text" class="b-field__edit-input">' +
-            '<button type="button" class="j-add-item">Add item</button>' +
-            '<button type="button" class="j-close-edit">Close</button>';
-
-        parentElement.appendChild(div);
+        $$.appendEl({
+            elCreate: 'div',
+            elParent: parentElement,
+            elClass: editableClassName,
+            elContent: editItemInput
+        });
 
         // like repeat item in items
         Dice.renderItemsList(parentElement.querySelector('.' + editableClassName), fieldName);
@@ -115,7 +115,7 @@ Dice.renderItemsList = (fieldEditWrap, fieldName) => {
         itemLayout = document.createElement('div');
 
     if (layout) {
-        layout.remove();
+        $$.delEl(layout);
     }
 
     itemLayout.className = 'l-field__edit-preview-wrap';
