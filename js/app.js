@@ -84,7 +84,7 @@ Dice.addEditable = function() {
     let parentElement = this.parentNode,
         editableClassName = 'b-field__edit',
         editable = document.getElementsByClassName(editableClassName),
-        fieldName = parentElement.id,
+        uniqueFieldID = parentElement.id,
         editItemInput;
 
     editItemInput  = '<input type="text" class="b-field__edit-input">';
@@ -101,7 +101,7 @@ Dice.addEditable = function() {
         });
 
         // like repeat item in items
-        Dice.renderItemsList(parentElement.querySelector('.' + editableClassName), fieldName);
+        Dice.renderItemsList(parentElement.querySelector('.' + editableClassName), uniqueFieldID);
 
         // initiate listeners to new editable field
         Dice.initListeners();
@@ -110,28 +110,36 @@ Dice.addEditable = function() {
 
 
 // add items in DOM
-Dice.renderItemsList = (fieldEditWrap, fieldName) => {
-    let layout = fieldEditWrap.querySelector('.l-field__edit-preview-wrap'),
-        itemLayout = document.createElement('div');
+Dice.renderItemsList = (fieldEditWrap, uniqueFieldID) => {
+    let previewWrapClass = 'l-field__edit-preview-wrap',
+        previewWrap = fieldEditWrap.querySelector('.' + previewWrapClass);
 
-    if (layout) {
-        $$.delEl(layout);
+    if (previewWrap) {
+        $$.delEl(previewWrap);
     }
 
-    itemLayout.className = 'l-field__edit-preview-wrap';
-    fieldEditWrap.appendChild(itemLayout);
+    // create empty wrap for rolled items
+    $$.appendEl({
+        elCreate: 'div',
+        elParent: fieldEditWrap,
+        elClass: previewWrapClass
+    });
 
-    if (Dice.data[fieldName]) {
-        Dice.data[fieldName].forEach(function(item) {
-            let div = document.createElement('div'),
-                layout = fieldEditWrap.querySelector('.l-field__edit-preview-wrap');
+    if (Dice.data[uniqueFieldID]) {
+        Dice.data[uniqueFieldID].forEach(function(item) {
+            let oncePreviewClass = 'b-field__edit-preview',
+                oncePreview = fieldEditWrap.querySelector('.' + previewWrapClass),
+                oncePreviewContent;
 
-            div.className = 'b-field__edit-preview';
-            div.innerHTML =
-                '<span class="b-field__edit-item">'+ item +'</span>' +
-                '<button type="button" class="j-del-item">Del item</button>';
+            oncePreviewContent  = '<span class="b-field__edit-item">'+ item +'</span>';
+            oncePreviewContent += '<button type="button" class="j-del-item">Del item</button>';
 
-            layout.appendChild(div);
+            $$.appendEl({
+                elCreate: 'div',
+                elParent: oncePreview,
+                elClass: oncePreviewClass,
+                elContent: oncePreviewContent
+            });
         });
     }
 };
