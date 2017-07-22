@@ -38,6 +38,8 @@ Dice.roll = () => {
         roll_input;
 
     for (let key in Dice.data) {
+        if (!document.getElementById(key)) return false;
+
         roll_input = document.getElementById(key).querySelector('.j-roll-input');
         randomNum = $$.randomNum(0, Dice.data[key].length - 1);
         roll_input.value = Dice.data[key][randomNum];
