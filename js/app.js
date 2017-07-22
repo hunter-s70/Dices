@@ -167,6 +167,15 @@ Dice.renderItemsList = (editable, fieldID) => {
     }
 };
 
+// length and unique value validate
+Dice.itemValidate = (additionValue, fieldID) => {
+    if (!additionValue.length) return false;
+
+    return Dice.data[fieldID].every(function(dataItem) {
+        return dataItem !== additionValue;
+    });
+};
+
 
 // funciton, wich add items in Dice.data
 Dice.addItem = function() {
@@ -176,7 +185,7 @@ Dice.addItem = function() {
 
     if (!Dice.data[fieldID]) Dice.data[fieldID] = [];
 
-    if (additionValue.length) {
+    if (Dice.itemValidate(additionValue, fieldID)) {
         Dice.data[fieldID].push(additionValue);
 
         // add items into view from Dice.data
