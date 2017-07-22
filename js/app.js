@@ -19,8 +19,8 @@ Dice.prefixID = 'in_';
 Dice.startIndex = 1;
 
 Dice.data = {
-    [Dice.prefixID + Dice.startIndex]      : ['Диван', 'Стол', 'Стул', 'Ванная', 'Пол'],
-    [Dice.prefixID + (Dice.startIndex + 1)]: ['Собачки', 'Сверху', 'Бочком', 'Снизу', 'Новая']
+    [Dice.prefixID + Dice.startIndex]      : ['Диван', 'Стол', 'Стул', 'Ванная', 'Телевизер'],
+    [Dice.prefixID + (Dice.startIndex + 1)]: ['Собака', 'Кот', 'Жираф', 'Крокодил', 'Тюлень']
 };
 
 
