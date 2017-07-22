@@ -73,12 +73,20 @@ Dice.addField = () => {
 };
 
 
-// delete input from input list
-Dice.deleteField = function() {
-    $$.delEl(this.parentNode);
+// delete field roll Data from Dice.data
+Dice.deleteFieldData = fieldID => {
+    delete Dice.data[fieldID];
 };
 
 
+// delete input from input list
+Dice.deleteField = function() {
+    $$.delEl(this.parentNode);
+    Dice.deleteFieldData(this.parentNode.id);
+};
+
+
+// add few roll fields
 Dice.addSeveralFields = fieldsNum => {
     for (let i = 0; i < fieldsNum; i+=1) {
         Dice.addField();
