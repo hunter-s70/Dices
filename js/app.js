@@ -13,10 +13,9 @@ const Dice = {};
 */
 
 Dice.DiceWrap = document.querySelector('.j-dice');
-Dice.roll_btn = document.querySelectorAll('.j-roll');
-Dice.add_field_btn = document.querySelectorAll('.j-add-field');
 Dice.prefixID = 'in_';
 Dice.startIndex = 1;
+Dice.fieldsOnStart = 2;
 
 Dice.data = {
     [Dice.prefixID + Dice.startIndex]      : ['Диван', 'Стол', 'Стул', 'Ванная', 'Телевизер'],
@@ -77,6 +76,13 @@ Dice.addField = () => {
 // delete input from input list
 Dice.deleteField = function() {
     $$.delEl(this.parentNode);
+};
+
+
+Dice.addSeveralFields = fieldsNum => {
+    for (let i = 0; i < fieldsNum; i+=1) {
+        Dice.addField();
+    }
 };
 
 
@@ -217,8 +223,26 @@ Dice.initListeners = () => {
 };
 
 
-$$.addListeners(Dice.roll_btn, Dice.roll);
+// render Buttons panel on start
+(() => {
+    let btnPanelContent,
+        btnPanelClass = 'btn-panel';
 
-$$.addListeners(Dice.add_field_btn, Dice.addField);
+    btnPanelContent  = '<button type="button" class="j-add-field">Add field</button>';
+    btnPanelContent += '<button type="button" class="j-roll">Roll</button>';
+    btnPanelContent += '<button type="reset">Reset fields</button>';
+
+    $$.appendEl({
+        elCreate: 'div',
+        elParent: Dice.DiceWrap,
+        elClass: btnPanelClass,
+        elContent: btnPanelContent
+    });
+
+    $$.addListeners(document.querySelectorAll('.j-roll'), Dice.roll);
+    $$.addListeners(document.querySelectorAll('.j-add-field'), Dice.addField);
+
+    Dice.addSeveralFields(Dice.fieldsOnStart);
+})();
 
 Dice.initListeners();
