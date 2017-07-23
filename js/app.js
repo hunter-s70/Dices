@@ -127,6 +127,8 @@ Dice.addEditable = function() {
             elContent: editableContent
         });
 
+        document.querySelector('.j-edit-input').focus();
+
         // like repeat item in items
         Dice.renderItemsList(parentElement.querySelector('.' + editableClass), fieldID);
 
