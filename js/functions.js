@@ -4,9 +4,9 @@
 const $$ = {
 
     // factory add listeners to selectors list
-    addListeners: (elements, callback) => {
+    addListeners: (event, elements, callback) => {
         for (let i = 0; i < elements.length; i++) {
-            elements[i].addEventListener('click', callback);
+            elements[i].addEventListener(event, callback);
         }
     },
 

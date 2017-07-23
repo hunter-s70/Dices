@@ -114,7 +114,7 @@ Dice.addEditable = function() {
         editable = document.getElementsByClassName(editableClass),
         editableContent;
 
-    editableContent  = '<input type="text" class="b-field__edit-input">';
+    editableContent  = '<input type="text" class="b-field__edit-input j-edit-input">';
     editableContent += '<button type="button" class="j-add-item">Add item</button>';
     editableContent += '<button type="button" class="j-close-edit">Close</button>';
 
@@ -189,7 +189,8 @@ Dice.itemValidate = (additionValue, fieldID) => {
 
 // funciton, wich add items in Dice.data
 Dice.addItem = function() {
-    let parentElement = this.parentNode,
+    console.log(this);
+    let parentElement = this.parentNode || document.querySelector('.b-field__edit'),
         editable = parentElement.querySelector('.b-field__edit-input'),
         additionValue = editable.value,
         fieldID = parentElement.parentNode.id;
@@ -230,6 +231,14 @@ Dice.deleteItem = function() {
 };
 
 
+// add item function
+Dice.addItemOnEnter = (e) => {
+    if (e.keyCode === 13) {
+        Dice.addItem();
+    }
+};
+
+
 /*
  * END EDITADLE TOOLS
  */
@@ -238,11 +247,12 @@ Dice.deleteItem = function() {
 // initiate listeners
 Dice.initListeners = () => {
     console.log('init');
-    $$.addListeners(document.querySelectorAll('.j-del-field'), Dice.deleteField);
-    $$.addListeners(document.querySelectorAll('.j-edit-field'), Dice.addEditable);
-    $$.addListeners(document.querySelectorAll('.j-close-edit'), Dice.deleteEditable);
-    $$.addListeners(document.querySelectorAll('.j-add-item'), Dice.addItem);
-    $$.addListeners(document.querySelectorAll('.j-del-item'), Dice.deleteItem);
+    $$.addListeners('click', document.querySelectorAll('.j-del-field'), Dice.deleteField);
+    $$.addListeners('click', document.querySelectorAll('.j-edit-field'), Dice.addEditable);
+    $$.addListeners('click', document.querySelectorAll('.j-close-edit'), Dice.deleteEditable);
+    $$.addListeners('click', document.querySelectorAll('.j-add-item'), Dice.addItem);
+    $$.addListeners('click', document.querySelectorAll('.j-del-item'), Dice.deleteItem);
+    $$.addListeners('keypress', document.querySelectorAll('.j-edit-input'), Dice.addItemOnEnter);
 };
 
 
@@ -262,8 +272,8 @@ Dice.initListeners = () => {
         elContent: btnPanelContent
     });
 
-    $$.addListeners(document.querySelectorAll('.j-roll'), Dice.roll);
-    $$.addListeners(document.querySelectorAll('.j-add-field'), Dice.addField);
+    $$.addListeners('click', document.querySelectorAll('.j-roll'), Dice.roll);
+    $$.addListeners('click', document.querySelectorAll('.j-add-field'), Dice.addField);
 
     Dice.addSeveralFields(Dice.fieldsOnStart);
 })();
