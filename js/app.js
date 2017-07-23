@@ -190,13 +190,17 @@ Dice.itemValidate = (additionValue, fieldID) => {
 // funciton, wich add items in Dice.data
 Dice.addItem = function() {
     let parentElement = this.parentNode,
-        additionValue = parentElement.querySelector('.b-field__edit-input').value,
+        editable = parentElement.querySelector('.b-field__edit-input'),
+        additionValue = editable.value,
         fieldID = parentElement.parentNode.id;
 
     if (!Dice.data[fieldID]) Dice.data[fieldID] = [];
 
     if (Dice.itemValidate(additionValue, fieldID)) {
         Dice.data[fieldID].push(additionValue);
+
+        // clear editable input
+        editable.value = '';
 
         // add items into view from Dice.data
         Dice.renderItemsList(parentElement, fieldID);
