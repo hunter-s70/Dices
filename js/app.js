@@ -34,15 +34,17 @@ Dice.count = (() => {
 
 // set random values in input
 Dice.roll = () => {
-    let randomNum,
-        roll_input;
-
     for (let key in Dice.data) {
-        if (!document.getElementById(key)) return false;
+        let randomNum,
+            roll_input,
+            field = document.getElementById(key),
+            dataField = Dice.data[key];
 
-        roll_input = document.getElementById(key).querySelector('.j-roll-input');
-        randomNum = $$.randomNum(0, Dice.data[key].length - 1);
-        roll_input.value = Dice.data[key][randomNum];
+        if (!field) return false;
+
+        roll_input = field.querySelector('.j-roll-input');
+        randomNum = $$.randomNum(0, dataField.length - 1);
+        roll_input.value = dataField[randomNum];
     }
 };
 
