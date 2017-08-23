@@ -33,19 +33,35 @@ Dice.count = (() => {
 
 
 // set random values in input
-Dice.roll = () => {
-    for (let key in Dice.data) {
-        let randomNum,
-            roll_input,
-            field = document.getElementById(key),
-            dataField = Dice.data[key];
+Dice.rollSetFields = (randomResults) => {
+    for (let key in randomResults) {
+        console.log(randomResults[key]);
+        let roll_input,
+            field = document.getElementById(key);
 
         if (!field) return false;
 
         roll_input = field.querySelector('.j-roll-input');
-        randomNum = $$.randomNum(0, dataField.length - 1);
-        roll_input.value = dataField[randomNum];
+        roll_input.value = randomResults[key];
     }
+};
+
+
+// add random values from data
+Dice.roll = () => {
+    let randomResults = {};
+
+    for (let key in Dice.data) {
+        let randomNum,
+            dataField = Dice.data[key],
+            dataLength = dataField.length - 1;
+
+        randomNum = $$.randomNum(0, dataLength);
+        randomResults[key] = dataField[randomNum];
+    }
+
+    // view method, work with DOM
+    Dice.rollSetFields(randomResults);
 };
 
 
