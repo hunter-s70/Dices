@@ -35,7 +35,6 @@ Dice.count = (() => {
 // set random values in input
 Dice.rollSetFields = (randomResults) => {
     for (let key in randomResults) {
-        console.log(randomResults[key]);
         let roll_input,
             field = document.getElementById(key);
 
