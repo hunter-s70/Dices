@@ -5,6 +5,8 @@ const $$ = {
 
     // factory add listeners to selectors list
     addListeners: (event, elements, callback) => {
+        if (typeof callback !== 'function') return false;
+
         for (let i = 0; i < elements.length; i++) {
             elements[i].addEventListener(event, callback);
         }
