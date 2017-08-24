@@ -24,4 +24,5 @@ input,
     text-overflow: ellipsis;
     white-space: nowrap;
     vertical-align: middle;
+    cursor: default;
 }
