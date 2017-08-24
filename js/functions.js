@@ -15,6 +15,7 @@ const $$ = {
 
     // generate random numbers
     randomNum: (min, max) => {
+        if (min > max) throw new Error('min larger than max');
         let rand;
 
         rand = min - 0.5 + Math.random() * (max - min + 1);
