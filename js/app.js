@@ -129,7 +129,11 @@ Dice.addEditable = function() {
         fieldID = parentElement.id,
         editableClass = 'b-field__edit',
         editable = document.getElementsByClassName(editableClass),
+        closeEditableBtn = document.querySelector('.j-close-edit'),
         editableContent;
+
+    // close editable when click other
+    if (closeEditableBtn) closeEditableBtn.click();
 
     editableContent  = '<input type="text" class="b-field__edit-input j-edit-input">';
     editableContent += '<button type="button" class="j-add-item">Add item</button>';
