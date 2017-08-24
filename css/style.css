@@ -1,0 +1,27 @@
+button,
+input,
+.b-field__edit-item {
+    margin: 0 2px;
+    outline: none;
+}
+
+.b-field {
+    margin: 2px 0;
+}
+
+.b-field__edit {
+    margin: 2px 15px;
+}
+
+.b-field__edit-preview {
+    margin: 2px 0;
+}
+
+.b-field__edit-item {
+    width: 200px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}

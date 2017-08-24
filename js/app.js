@@ -75,7 +75,7 @@ Dice.addField = () => {
         fieldClass = 'b-field j-field',
         fieldContent;
 
-    fieldContent  = '<input type="text" class="j-roll-input">';
+    fieldContent  = '<input type="text" class="j-roll-input" disabled>';
     fieldContent += '<button type="button" class="j-del-field">Del field</button>';
     fieldContent += '<button type="button" class="j-edit-field">Edit field</button>';
 
@@ -257,6 +257,11 @@ Dice.addItemOnEnter = (e) => {
 };
 
 
+Dice.selectAllString = (e) => {
+    e.target.setSelectionRange(0, e.target.value.length);
+};
+
+
 /*
  * END EDITADLE TOOLS
  */
@@ -270,6 +275,7 @@ Dice.initListeners = () => {
     $$.addListeners('click', document.querySelectorAll('.j-add-item'), Dice.addItem);
     $$.addListeners('click', document.querySelectorAll('.j-del-item'), Dice.deleteItem);
     $$.addListeners('keypress', document.querySelectorAll('.j-edit-input'), Dice.addItemOnEnter);
+    $$.addListeners('focus', document.querySelectorAll('.j-edit-input'), Dice.selectAllString);
 };
 
 
