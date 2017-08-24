@@ -208,7 +208,6 @@ Dice.itemValidate = (additionValue, fieldID) => {
 
 // funciton, wich add items in Dice.data
 Dice.addItem = function() {
-    console.log(this);
     let parentElement = this.parentNode || document.querySelector('.b-field__edit'),
         editable = parentElement.querySelector('.b-field__edit-input'),
         additionValue = editable.value,
@@ -265,7 +264,6 @@ Dice.addItemOnEnter = (e) => {
 
 // initiate listeners
 Dice.initListeners = () => {
-    console.log('init');
     $$.addListeners('click', document.querySelectorAll('.j-del-field'), Dice.deleteField);
     $$.addListeners('click', document.querySelectorAll('.j-edit-field'), Dice.addEditable);
     $$.addListeners('click', document.querySelectorAll('.j-close-edit'), Dice.deleteEditable);
